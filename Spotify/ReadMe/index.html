@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lit Pixi - Spotify now linked to VoiceAttack</title>
+
+    <script src="/auth_assets/main.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+
+    <style>
+      div {
+        font-family: "Montserrat", sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .spotifyGreenBackground { background-color: #1DB954; }
+
+      .spotifyRedBackground { background-color: red; }
+
+      .spotifyGreenText { color: #1DB954; }
+
+      .subList {
+        font-size: 15px;
+        margin-left: 15px;
+      }
+
+      .paramsTitle { font-style: italic; }
+
+      .doc { color: green }
+
+      .type { color: purple }
+
+      .premium { color: #1db954 }
+
+      .isLatestVersionFalse { display: none; }
+
+      .isNewVersionAvailableFalse { display: none; }
+
+      .collapsible {
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-size: 20px;
+        margin-top: 20px;
+        outline: none;
+        padding: 25px;
+        text-align: left;
+        width: 100%;
+      }
+
+      .active, .collapsible:hover { background-color: #555; }
+
+      .collapsible:after {
+        color: white;
+        content: '\002B';
+        float: right;
+        font-weight: bold;
+        margin-left: 5px;
+      }
+
+      .active:after { content: "\2212"; }
+
+      .content {
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 18px;
+        transition: max-height 0.2s ease-out;
+      }
+    </style>
+  </head>
+
+  <body style="margin-left: auto; margin-right: auto; max-width: 1300px;">
+
+    <div class="spotifyGreenBackground" id="successTitle" style="border-radius: 15px 50px; height: 100px; width: 100%;">
+      <div style="color: white; font-size: x-large; padding-top: 30px; text-align: center;">Spotify is now linked to VoiceAttack! You can close this page and start talking to your lovely computer.</div>
+    </div>
+
+    <div class="spotifyRedBackground" id="errorTitle" style="border-radius: 15px 50px; height: 100px; visibility: collapse; width: 100%;">
+      <div style="color: white; font-size: x-large; padding-top: 30px; text-align: center;">Spotify has not given the authorization... Did you agree the authorization?</div>
+    </div>
+
+    <div style="padding: 50px">
+
+      <!--<div style="margin-bottom: 50px; margin-top: 50px;">
+        <p class="isLatestVersion{{IsLatestVersion}} spotifyGreenText">Your version of the plugin is up to date! <b>{{CurrentPluginVersion}}</b></p>
+        <p class="isNewVersionAvailable{{IsNewVersionAvailable}}" style="color: orange">New version available : <b>{{LatestPluginVersion}}</b>. <a href="https://litpixistorage.blob.core.windows.net/publicfiles/Spotify.zip">Click here to download.</a></p>
+      </div>-->
+
+      <div>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input name="cmd" type="hidden" value="_s-xclick">
+          <input name="hosted_button_id" type="hidden" value="PHNLCGNM86DVY">
+          <input alt="Donate" border="0" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" type="image">
+          <img alt="" border="0" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1">
+        </form>
+        <p>Any funds received are monetary tips to help support the development of this plugin or any future projects. While I do appreciate if you do decide to tip, it is not required.</p>
+      </div>
+
+      <!--<div>
+        <a href="http://LitPixi.com" target="_blank">Website: LitPixi.com</a>
+      </div>-->
+
+      <p>
+        <span>Email: </span><a href="mailto:info@litpixi.com">info@litpixi.com</a>
+      </p>
+
+      <button class="collapsible spotifyGreenBackground">Documentation</button>
+      <div class="content">
+
+        <h3>Variables:</h3>
+
+        <h4>Playback:</h4>
+        <ul>
+          <li>Spotify_IsRunning <span class="type">: boolean</span></li>
+          <li>Spotify_IsPlaying <span class="type">: boolean</span></li>
+          <li>Spotify_IsShuffleEnabled <span class="type">: boolean</span></li>
+          <li>Spotify_RepeatMode <span class="type">: text</span></li>
+          <li>Spotify_Volume <span class="type">: integer</span></li>
+          <li>Spotify_IsMuted <span class="type">: boolean</span></li>
+          <li>Spotify_IsAd <span class="type">: boolean</span></li>
+        </ul>
+
+        <h4>Track:</h4>
+        <ul>
+          <li>Spotify_TrackId <span class="type">: text</span></li>
+          <li>Spotify_TrackName <span class="type">: text</span></li>
+          <li>Spotify_TrackLength <span class="type">: integer</span> <span class="doc">// Returns in milliseconds, 1 second = 1000 milliseconds.</span></li>
+          <li>Spotify_IsTrackSaved <span class="type">: boolean</span></li>
+        </ul>
+
+        <h4>Album:</h4>
+        <ul>
+          <li>Spotify_AlbumId <span class="type">: text</span></li>
+          <li>Spotify_AlbumName <span class="type">: text</span></li>
+          <li>Spotify_AlbumType <span class="type">: text</span></li>
+          <li>Spotify_AlbumReleaseDate <span class="type">: text</span></li>
+          <li>Spotify_AlbumUri <span class="type">: text</span></li>
+          <li>Spotify_IsAlbumSaved <span class="type">: boolean</span></li>
+        </ul>
+
+        <h4>Artist:</h4>
+        <ul>
+          <li>Spotify_ArtistId <span class="type">: text</span></li>
+          <li>Spotify_ArtistName <span class="type">: text</span></li>
+          <li>Spotify_ArtistUri <span class="type">: text</span></li>
+          <li>Spotify_IsFollowingArtist <span class="type">: boolean</span></li>
+        </ul>
+
+        <h4>Playlist:</h4>
+        <ul>
+          <li>Spotify_PlaylistId <span class="type">: text</span></li>
+          <li>Spotify_PlaylistName <span class="type">: text</span></li>
+          <li>Spotify_PlaylistDescription <span class="type">: text</span></li>
+          <li>Spotify_PlaylistUri <span class="type">: text</span></li>
+          <li>Spotify_IsFollowingPlaylist <span class="type">: boolean</span></li>
+        </ul>
+
+        <h4>Device:</h4>
+        <ul>
+          <li>Spotify_DeviceName <span class="type">: text</span></li>
+          <li>Spotify_DeviceType <span class="type">: text</span></li>
+          <li>Spotify_IsDeviceActive <span class="type">: boolean</span></li>
+        </ul>
+
+        <h3>Commands (context):</h3>
+
+        <h4>Playback:</h4>
+        <ul>
+          <li>Play <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Play/Pause".</span></li>
+          <li>Pause <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Play/Pause".</span></li>
+          <li>Skip <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Next Track".</span></li>
+          <li>Previous <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Previous Track" twice.</span></li>
+          <li>ToBeginning <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Previous Track" once.</span></li>
+          <li>ChangeRepeatMode <span class="premium">(Premium only)</span></li>
+          <li>ToggleShuffle <span class="premium">(Premium only)</span></li>
+          <li>Mute <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Volume Mute", but mutes the whole PC instead of Spotify only.</span></li>
+          <li>Unmute <span class="premium">(Premium only)</span> <span class="doc">// For free subscriptions, use VoiceAttack Key Press command "Volume Mute", but unmutes the whole PC instead of Spotify only.</span></li>
+          <li>
+            SetVolume <span class="premium">(Premium only)</span>
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_SetThatVolume <span class="type">: integer</span> <span class="doc">// Number between 0 and 100%.</span></div>
+          </li>
+          <li>
+            PlayUrl <span class="premium">(Premium only)</span>
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_PlayThatUrl <span class="type">: text</span> <span class="doc">// The Spotify URL of a playlist, album or artist.</span></div>
+          </li>
+          <li>
+            PlayFeaturedPlaylist <span class="premium">(Premium only)</span>
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_Offset <span class="type">: integer (optional, default 0)</span> <span class="doc">// The offset is the playlist position (zero-based) that will be selected.</span></div>
+            <div class="subList">Spotify_Country <span class="type">: text (optional, default "")</span> <span class="doc">// The featured playlist from that country, specified as <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">country code</a>.</span></div>
+            <div class="subList">Spotify_Timestamp <span class="type">: date time (optional, default null)</span> <span class="doc">// The featured playlist according to that moment.</span></div>
+          </li>
+          <li>
+            PlayNewRelease <span class="premium">(Premium only)</span>
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_Offset <span class="type">: integer (optional, default 0)</span> <span class="doc">// The offset is the release position (zero-based) that will be selected.</span></div>
+            <div class="subList">Spotify_Country <span class="type">: text (optional, default "")</span> <span class="doc">// The new release from that country, specified as <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">country code</a>.</span></div>
+          </li>
+        </ul>
+
+        <h4>Track:</h4>
+        <ul>
+          <li>IsTrackSaved</li>
+          <li>SaveTrack</li>
+          <li>RemoveSavedTrack</li>
+          <li>
+            PlayMyTopTracks
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_Limit<span class="type">: integer (optional, default 50, maximum 50)</span> <span class="doc">// The quantity of tracks to play in your personal top tracks.</span></div>
+            <div class="subList">Spotify_TimeRange <span class="type">: integer (optional, default 2)</span> <span class="doc">// Over what time frame the selection will be made. Only options are: 1 = several years; 2 = last 6 months; 3 = last 4 weeks</span></div>
+          </li>
+        </ul>
+
+        <h4>Album:</h4>
+        <ul>
+          <li>IsAlbumSaved</li>
+          <li>SaveAlbum</li>
+          <li>RemoveSavedAlbum</li>
+        </ul>
+
+        <h4>Artist:</h4>
+        <ul>
+          <li>IsFollowingArtist</li>
+          <li>FollowArtist</li>
+          <li>UnfollowArtist</li>
+          <li>
+            PlayMyTopArtist
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_Offset <span class="type">: integer (optional, default 0)</span> <span class="doc">// The offset is the artist position (zero-based) that will be selected.</span></div>
+            <div class="subList">Spotify_TimeRange <span class="type">: integer (optional, default 2)</span> <span class="doc">// Over what time frame the selection will be made. Only options are: 1 = several years; 2 = last 6 months; 3 = last 4 weeks</span></div>
+          </li>
+        </ul>
+
+        <h4>Playlist:</h4>
+        <ul>
+          <li>IsFollowingPlaylist</li>
+          <li>
+            FollowPlaylist
+            <div class="paramsTitle subList">Parameters:</div>
+            <div class="subList">Spotify_PlaylistPublic <span class="type">: boolean (optional, default true)</span> <span class="doc">// If "True", the playlist will be included in your public playlists, if "False", it will remain private.</span></div>
+          </li>
+          <li>UnfollowPlaylist</li>
+        </ul>
+
+        <h4>General:</h4>
+        <ul>
+          <li>UpdateState (or no context) <span class="doc">// To update all the variables.</span></li>
+          <li>DownloadNewVersion <span class="doc">// Download into the browser the new version zip package.</span></li>
+        </ul>
+
+        <p>
+          <h3>Prerequisites:</h3>
+          <div>You need to have .Net Framework 4.7.2 installed.</div>
+        </p>
+
+        <p>
+          <h3>Troubleshoot:</h3>
+          <li>If you have removed the authorization of the plugin in your Spotify profile, you will have to remove this file to redo the authentification process: C:\Users\[your profile name]\AppData\Local\Lit Pixi\Spotify\RequestTokenFile.json</li>
+          <li>If you are connected through a VPN, Spotify will probably not register as your computer is currently playing something, so the plugin will not work. Check the Spotify mobile app if it sees your computer as currently playing something.</li>
+        </p>
+
+        <p>
+          <h3>Telemetry:</h3>
+          <div>Please note that I'm using a telemetry system to collect data. The telemetry data are and will never be sold or traded. Those data help me to identify features that should be reworked or added, but in a more meaningful way, to identify, track and help me to fix bugs or errors you could get through the utilization of the plugin. If for any reason you want to opt out from the collection of data, create in the Spotify plugin folder a text file with the name "NoTelemetry.txt". Once done, you should have a confirmation that the telemetry system is disabled when launching VoiceAttack.</div>
+        </p>
+      </div>
+
+      <button class="collapsible spotifyGreenBackground">Release notes</button>
+      <div class="content">
+        <div>
+          <h4>2022-04-03 - version 3.0.1.3</h4>
+          <ul>
+              <li>Upgraded dependencies to fix some errors that have been reported to me.</li>
+              <li>Added the troubleshoot section in the read me page.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>2021-02-12 - version 3.0.0.0</h4>
+          <ul>
+            <li>Upgraded the .Net Framework from 4.6.0 to 4.7.2 to ensure same minimum requirements as Voice Attack.</li>
+            <li>Re-did all the Spotify integration to its API.</li>
+            <li>Now, the documentation web page will only open for the first time authorization. The Spotify refresh token is now stored in this file: %LocalAppData%\Lit Pixi\Spotify\RequestTokenFile.json. As long as the token can be refreshed with that file, the plugin should retains its authorizations.</li>
+            <li>Added new command "DownloadNewVersion".</li>
+            <li>Updated the included profile to fix the typo in the command "Play featured playlist" and to add "Download new version".</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>2018-11-08 - version 2.1.0.0</h4>
+          <ul>
+            <li>Added to the documentation the data collection via telemetry.</li>
+            <li>Added a way to opt out from telemetry.</li>
+            <li>Fixed a null reference exception.</li>
+            <li>Downgraded the .Net Framework from 4.6.1 to 4.6 to ensure minimum requirements.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>2018-10-27 - version 2.0.0.0</h4>
+          <div>This is a complete rewrite of the plugin using the official Spotify Web API. The plugin is now better than ever and brings many new features! If there is anything that does not work or if you have a suggestion, just drop me an <a href="mailto:info@litpixi.com">email</a>.</div>
+          <ul>
+            <li>Authentication through the official Spotify API.</li>
+            <li>New variables.</li>
+            <li>New commands.</li>
+            <li>Updated VoiceAttack demo profile.</li>
+            <li><span style="color: red">Breaking changes:</span> You have to rename the variables "Spotify_SongName" to "Spotify_TrackName" and "Spotify_SongLength" to "Spotify_TrackLength".</li>
+            <li>The plugin itself doesn't launch Spotify anymore. You may use the "Run an Application" VoiceAttack command and type "spotify:" as the path to launch it.</li>
+            <li>Several commands are premium subscription only, so if you are on a free subscription, the commands to control the playback (e.g. "Play", "Pause", "Skip", etc) will fail (code 403). But for those commands, just use VoiceAttack Key Press commands. Free subscription can still have the name of the tracks read out loud and many other functions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var coll = document.getElementsByClassName("collapsible");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          const content = this.nextElementSibling;
+
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          }
+          else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get('error');
+
+      if (error) {
+        document.getElementById("errorTitle").style.visibility = "visible";
+        document.getElementById("successTitle").style.visibility = "collapse";
+      }
+
+    </script>
+  </body>
+</html>

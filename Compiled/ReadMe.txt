@@ -1,0 +1,2 @@
+- Copy the extracted folder Spotify into the VoiceAttack plugin folder named "Apps". The plugin needs to be into his own folder.
+- Optional, but you can import the demo profile "Spotify-Profile.vap" into VoiceAttack.
