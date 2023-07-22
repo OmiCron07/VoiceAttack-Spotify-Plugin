@@ -5,7 +5,7 @@ namespace Spotify.Infrastructure
 {
   public static class WebUtil
   {
-    private const string BaseAddress = "https://github.com/OmiCron07/VoiceAttack-Spotify-Plugin/blob/main";
+    private const string BaseAddress = "https://raw.githubusercontent.com/OmiCron07/VoiceAttack-Spotify-Plugin/main";
 
 
     private static readonly WebClient _client = new WebClient();
