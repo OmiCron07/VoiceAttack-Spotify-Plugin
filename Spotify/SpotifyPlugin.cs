@@ -36,7 +36,7 @@ namespace Spotify
 
     public static string VA_DisplayName()
     {
-      return "Spotify Plugin - litpixi.com/va-spotify/";
+      return "Spotify Plugin - github.com/OmiCron07/VoiceAttack-Spotify-Plugin";
     }
 
     public static string VA_DisplayInfo()

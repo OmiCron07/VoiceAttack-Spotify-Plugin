@@ -5,7 +5,7 @@ namespace Spotify.Infrastructure
 {
   public static class WebUtil
   {
-    private const string BaseAddress = "http://litpixispotify.azurewebsites.net";
+    private const string BaseAddress = "https://github.com/OmiCron07/VoiceAttack-Spotify-Plugin/blob/main";
 
 
     private static readonly WebClient _client = new WebClient();
@@ -15,7 +15,7 @@ namespace Spotify.Infrastructure
     {
       try
       {
-        string pluginVersion = _client.DownloadString($"{BaseAddress}/pluginVersion.php");
+        string pluginVersion = _client.DownloadString($"{BaseAddress}/PluginVersion.txt");
 
         return string.IsNullOrWhiteSpace(pluginVersion) ? null : Version.Parse(pluginVersion);
       }
